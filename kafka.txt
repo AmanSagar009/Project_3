@@ -1,0 +1,53 @@
+go to root user  :hdoop
+#Make sure JAVA IS INSTALLED  ..Here 11.0.11 is installed
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+$sudo apt install default-jdk scala git -y
+$java -version; javac -version; scala -version; git --version
+$wget https://downloads.apache.org/kafka/2.8.0/kafka_2.12-2.8.0.tgz
+
+# or directly download from https://kafka.apache.org/downloads
+
+$tar -xvf kafka-2.12.8.0-src.tgz              //FOR UNZIPPING THE FILE
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+# Now go to  home/downloads/kafka_2.1.-2.8.0/config/server.properties    
+make 2 changes in server.properties:
+---1
+in line 36
+uncomment advertised.listeners
+and edit as localhost:9092
+
+------------------------------------------------------------------------------------------------------------------------------------------
+{ go to kafka_2.12-2.8.0 directory -> ls -> cd bin }
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+#START ZOOKEEPER  IN T1
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+#START THE SERVER  IN T2   {CTR + SHIFT + N  -> FOR NEW TERMINAL }
+bin/kafka-server-start.sh config/server.properties
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+#TOPIC CREATION IN T3   {CTR + SHIFT + N  -> FOR NEW TERMINAL }
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --topic Projectp3 --replication-factor 1 --partitions 1
+bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic Projectp3 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+#CREATE PRODUCER  IN T4   {CTR + SHIFT + N  -> FOR NEW TERMINAL }
+bin/kafka-console-producer.sh --topic Projectp3 --broker-list localhost:9092
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+#CREATE CONSUMER IN T5   {CTR + SHIFT + N  -> FOR NEW TERMINAL }
+bin/kafka-console-consumer.sh --topic Projectp3 --bootstrap-server localhost:9092 --from-beginning
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+list:
+bin/kafka-topics.sh --list --zookeeper localhost:9092
