@@ -4,15 +4,15 @@ go to root user  :hdoop
 
 $sudo apt install default-jdk scala git -y
 $java -version; javac -version; scala -version; git --version
-$wget https://downloads.apache.org/kafka/2.8.0/kafka_2.12-2.8.0.tgz
+$wget https://downloads.apache.org/kafka/2.8.0/kafka_2.13-2.8.0.tgz
 
 # or directly download from https://kafka.apache.org/downloads
 
-$tar -xvf kafka-2.12.8.0-src.tgz              //FOR UNZIPPING THE FILE
+$tar -xvf kafka-2.13.8.0-src.tgz              //FOR UNZIPPING THE FILE
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
-# Now go to  home/downloads/kafka_2.1.-2.8.0/config/server.properties    
+# Now go to  home/downloads/kafka_2.13.-2.8.0/config/server.properties    
 make 2 changes in server.properties:
 ---1
 in line 36
@@ -20,7 +20,7 @@ uncomment advertised.listeners
 and edit as localhost:9092
 
 ------------------------------------------------------------------------------------------------------------------------------------------
-{ go to kafka_2.12-2.8.0 directory -> ls -> cd bin }
+{ go to kafka_2.13-2.8.0 directory -> ls -> cd bin }
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 #START ZOOKEEPER  IN T1
