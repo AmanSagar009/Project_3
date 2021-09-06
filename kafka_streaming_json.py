@@ -57,10 +57,6 @@ if __name__ == "__main__":
 
     od_df.printSchema()
 
-    card_df = od_df.select(od_df.col("*")).where(od_df.col("payment_type").eq("Card"))
-
-    card_df.printSchema()
-
     od_df.writeStream \
         .format("console") \
         .outputMode("append") \
