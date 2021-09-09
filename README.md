@@ -1,7 +1,8 @@
 ## Power Brokers
 
 # Project Description
-Using Kafka and SparkSQL / DataFrames, process data streams of "Order Placements & Transactions" data. The data is to be generated on the fly (no file input) and pushed to a Kafka topic. Read the data from the Kafka topic and perform the following operations / processes: 1. Segregate the mode of payments like credit card, debit card, Internet banking, UPI, Wallet, Google PAY, PAYTM etc., and in each identify how many were successful and how many were failed due to what reason. 2. Determine City-wise number of orders placed and the total amount made in each payment modes mentioned above. 3. Store the results of point #4 in a Parquet file and also display the same on the console.
+Using Kafka and SparkSQL / DataFrames, process data streams of "Order Placements & Transactions" data. The data is to be generated on the fly (no file input) and pushed to a Kafka topic. Read the data from the Kafka topic and perform the following operations / processes: 1. Segregate the mode of payments like credit card, debit card, Internet banking, UPI, Wallet, Google PAY, PAYTM etc., and in each identify how many were successful and how many were failed due to what reason. 2. Determine City-wise number of orders
+placed and the total amount made in each payment modes mentioned above. 3. Store the results of point #4 in a Parquet file and also display the same on the console.
 
 # Technologies Used
 
@@ -11,6 +12,17 @@ Using Kafka and SparkSQL / DataFrames, process data streams of "Order Placements
 * Spark Streaming
 
 # Features
+
+1. We have created a producer. It will ingest data into Kafka topic every 2 second.
+2. We have created a consumer that will consume data from the topic.
+3. Categorized streaming data into payment types and transaction status.
+  i.e Payment types: Internet banking, UPI, Card, Wallet, Google Pay, Paytm
+      Transaction status: Successful, Failed
+4. We have created different topic and send data to the respective topic.
+  i.e If payment types is Card then it will goes to the "card-topic"
+  
+5. We have done some aggregation on streaming data and append processed data into parquet file. 
+  i.e Total number of orders placed in particular city
 
 # Getting Started
 
