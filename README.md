@@ -44,11 +44,13 @@ git clone https://github.com/AmanSagar009/Project_3.git
 5. Enter into the project_3 directory using "cd project_3".
 
 6. For execution of python file you need Kafka and Zookeeper started,. You can use below command for starting Zookeeper and Kafka.
-Start Zookeeper
+
+  Start Zookeeper
 ```
 $KAFKA_HOME/bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
-Start Kafka
+
+  Start Kafka
 ```
 $KAFKA_HOME/bin/kafka-server-start.sh config/server.properties
 ```
