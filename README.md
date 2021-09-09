@@ -16,10 +16,13 @@ Using Kafka and SparkSQL / DataFrames, process data streams of "Order Placements
 # Features
 
 1. We have created a producer. It will ingest data into Kafka topic every 2 second.
+
 2. We have created a consumer that will consume data from the topic.
+
 3. Categorized streaming data into payment types and transaction status.
   i.e Payment types: Internet banking, UPI, Card, Wallet, Google Pay, Paytm
       Transaction status: Successful, Failed
+      
 4. We have created different topic and send data to the respective topic.
   i.e If payment types is Card then it will goes to the "card-topic"
   
@@ -34,9 +37,9 @@ Using Kafka and SparkSQL / DataFrames, process data streams of "Order Placements
 * Spark installation: https://sparkbyexamples.com/spark/spark-setup-on-hadoop-yarn
 * Kafka installation: https://www.tutorialkart.com/apache-kafka/install-apache-kafka-on-ubuntu
 
-2. After installing Ubuntu and all tools open terminal in Ubuntu.
+2. After installing Ubuntu and all tools, open terminal in Ubuntu.
 
-3. Clone the project at home/hdoop directory using below command.
+3. Clone the project at "home/hdoop" directory using below command.
 ```
 git clone https://github.com/AmanSagar009/Project_3.git
 ```
