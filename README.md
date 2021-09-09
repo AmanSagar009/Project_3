@@ -1,6 +1,6 @@
 # Power Brokers
 
-# Project Description
+## Project Description
 Using Kafka and SparkSQL / DataFrames, process data streams of "Order Placements & Transactions" data. The data is to be generated on the fly (no file input) and pushed to a Kafka topic. Read the data from the Kafka topic and perform the following operations / processes: 1. Segregate the mode of payments like credit card, debit card, Internet banking, UPI, Wallet, Google PAY, PAYTM etc., and in each identify how many were successful and how many were failed due to what reason. 2. Determine City-wise number of orders
 placed and the total amount made in each payment modes mentioned above. 3. Store the results of point #4 in a Parquet file and also display the same on the console.
 
