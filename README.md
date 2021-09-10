@@ -52,12 +52,12 @@ git clone https://github.com/AmanSagar009/Project_3.git
 
   Start Zookeeper
 ```
-$KAFKA_HOME/bin/zookeeper-server-start.sh config/zookeeper.properties
+$KAFKA_HOME/bin/zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties
 ```
 
   Start Kafka
 ```
-$KAFKA_HOME/bin/kafka-server-start.sh config/server.properties
+$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
 ```
 
 7. When you execute this project then you need topic. You can create topic using below command when needed.
