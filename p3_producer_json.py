@@ -77,8 +77,8 @@ if __name__ == '__main__':
         event["product_id"], product_details = random.choice(list(product.items()))
         event["product_name"], event["product_category"] = product_details[0], product_details[1]
         event["payment_type"] = random.choice(payment_types_list)
-        event["qty"] = random.randint(1, 30)
-        event["price"] = round(random.uniform(500, 100000), 2)
+        event["qty"] = random.randint(1, 10)
+        event["price"] = random.randint(1, 100)
         event["order_datetime"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         event["ecommerce_website_name"] = random.choice(ecommerce_website_name_list)
         event["payment_txn_id"] = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))

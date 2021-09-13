@@ -29,9 +29,10 @@ if __name__ == "__main__":
         .option("startingOffsets", "earliest") \
         .load()
 
+    print('*****Streaming schema*****')
     orders_df.printSchema()
 
-    orders_df1 = orders_df.selectExpr("CAST(value AS STRING)")
+    orders_df1 = orders_df.withWatermark("timestamp", "1 minutes").selectExpr("CAST(value AS STRING)")
 
     schema = StructType() \
         .add('order_id', IntegerType()) \
@@ -51,15 +52,73 @@ if __name__ == "__main__":
         .add('payment_txn_status', StringType()) \
         .add('failure_reason', StringType())
 
-    od_df = orders_df1 \
-        .select(from_json(col("value"), schema).alias("data")) \
-        .select("data.*")
+    orders_df2 = orders_df1 \
+        .select(from_json(col("value"), schema).alias("data")).select('data.*')
 
-    od_df.printSchema()
+    print('*****DataFrame Schema*****')
+    orders_df2.printSchema()
 
-    od_df.writeStream \
+    # print("==========Normal DataFrame==========")
+    # od_df = orders_df2.writeStream \
+    #     .format("console") \
+    #     .outputMode("append") \
+    #     .start()
+
+    od_df1 = orders_df2.groupBy('city', 'payment_type') \
+        .agg(count('order_id').alias("total_order"), sum(col('qty')*col('price')).alias("total_amount"))
+
+    od_df1.printSchema()
+
+    # od_df = od_df1.writeStream \
+    #     .format('parquet') \
+    #     .outputMode('append') \
+    #     .option('path', '/p3') \
+    #     .trigger(processingTime='20 seconds') \
+    #     .start()
+
+    od_df = od_df1.writeStream \
+        .trigger(processingTime='20 seconds')\
+        .outputMode("update") \
         .format("console") \
-        .outputMode("append") \
-        .start() \
-        .awaitTermination()
+        .start()
+
+    od_df.awaitTermination()
+
+    # transaction_details = od_df.select('order_id', 'city', (col('qty')*(col('price'))).alias('total_price'))
+
+    # transaction_details.printSchema()
+
+    # print("=====Transaction DataFrame=====")
+    # td_df1 = transaction_details.writeStream \
+    #     .format("console") \
+    #     .outputMode("append") \
+    #     .start()
+
+    # card_df = od_df.filter("payment_type == 'Card'")
+
+    # card_producer = card_df.withColumn("key", lit(100)) \
+    #     .withColumn("value", concat(card_df.select("*").filter("payment_type == 'Card'")))
+
+    # Write key-value data from a DataFrame to a specific Kafka topic specified in an option
+    # trans_detail_write_stream_1 = card_producer \
+    #     .selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)") \
+    #     .writeStream \
+    #     .format("kafka") \
+    #     .option("kafka.bootstrap.servers", kafka_bootstrap_servers) \
+    #     .option("topic", card_topic_name) \
+    #     .trigger(processingTime='1 seconds') \
+    #     .outputMode("update") \
+    #     .option("checkpointLocation", "file:///home/hdoop/tmp/py_checkpoint") \
+    #     .start()
+
+    # print("==========Card DataFrame==========")
+    # card_df1 = card_df.writeStream \
+    #     .format("console") \
+    #     .outputMode("append") \
+    #     .start()
+
+    # od_df.awaitTermination()
+    # od_df2.awaitTermination()
+    # td_df1.awaitTermination()
+    # card_df1.awaitTermination()
     
