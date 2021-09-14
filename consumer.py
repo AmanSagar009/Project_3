@@ -65,7 +65,6 @@ if __name__ == "__main__":
     
     orders_df3.printSchema()
 
-    print("==========Normal DataFrame==========")
 
     orders_df3.writeStream \
         .trigger(processingTime='20 seconds') \
