@@ -64,10 +64,20 @@ if __name__ == "__main__":
     #     .outputMode("append") \
     #     .start()
 
-    od_df1 = orders_df2.groupBy('city', 'payment_type') \
-        .agg(count('order_id').alias("total_order"), sum(col('qty')*col('price')).alias("total_amount"))
+    # od_df1 = orders_df2.groupBy('city', 'payment_type') \
+    #     .agg(count('order_id').alias("total_order"), sum(col('qty')*col('price')).alias("total_amount"))
 
-    od_df1.printSchema()
+    # od_df1.printSchema()
+
+    
+
+    orders_df3 = orders_df2.groupBy("payment_txn_success","city","payment_type") \
+    .agg(sum("price").alias("Total_price"),\
+    count("order_id").alias("Total_orders")) \
+    .select("city","Total_orders","payment_type","Total_price","payment_txn_success")\
+    .orderBy("city")
+
+    # od_df1.awaitTermination()
 
     # od_df = od_df1.writeStream \
     #     .format('parquet') \
@@ -76,13 +86,14 @@ if __name__ == "__main__":
     #     .trigger(processingTime='20 seconds') \
     #     .start()
 
-    od_df = od_df1.writeStream \
+    od_df = orders_df1.writeStream \
         .trigger(processingTime='20 seconds')\
         .outputMode("update") \
         .format("console") \
         .start()
 
     od_df.awaitTermination()
+    
 
     # transaction_details = od_df.select('order_id', 'city', (col('qty')*(col('price'))).alias('total_price'))
 
