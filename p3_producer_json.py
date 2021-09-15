@@ -81,7 +81,7 @@ if __name__ == '__main__':
         event["price"] = random.randint(1, 100)
         event["order_datetime"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         event["ecommerce_website_name"] = random.choice(ecommerce_website_name_list)
-        event["payment_txn_id"] = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+        event["payment_txn_id"] = ''.join(random.choices/(string.ascii_lowercase + string.digits, k=10))
         payment_txn_status = random.choice(['success', 'failed'])
         event["payment_txn_status"] = payment_txn_status
         if payment_txn_status == 'failed':

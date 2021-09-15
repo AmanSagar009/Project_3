@@ -64,6 +64,7 @@ if __name__ == "__main__":
     #     .outputMode("append") \
     #     .start()
 
+<<<<<<< HEAD
     od_card = orders_df2.filter("payment_type=='Card'")
 
     od_card1 = od_card.withColumn("key", lit(100)) \
@@ -97,6 +98,22 @@ if __name__ == "__main__":
         .start()
 
     # od_card1.printSchema()
+=======
+    # od_df1 = orders_df2.groupBy('city', 'payment_type') \
+    #     .agg(count('order_id').alias("total_order"), sum(col('qty')*col('price')).alias("total_amount"))
+
+    # od_df1.printSchema()
+
+    
+
+    orders_df3 = orders_df2.groupBy("payment_txn_success","city","payment_type") \
+    .agg(sum("price").alias("Total_price"),\
+    count("order_id").alias("Total_orders")) \
+    .select("city","Total_orders","payment_type","Total_price","payment_txn_success")\
+    .orderBy("city")
+
+    # od_df1.awaitTermination()
+>>>>>>> 46ef6c222a1e1e9fe571503b32c13aea561a691d
 
     # trans_detail_write_stream = od_card1 \
     #     .writeStream \
@@ -106,6 +123,7 @@ if __name__ == "__main__":
     #     .format("console") \
     #     .start()
 
+<<<<<<< HEAD
     # trans_detail_write_stream.awaitTermination()
 
     od_parquet = orders_df2.withWatermark("order_datetime", "10 minutes") \
@@ -120,6 +138,11 @@ if __name__ == "__main__":
     # od_df1.printSchema()
 
     od_df = od_parquet.writeStream \
+=======
+    od_df = orders_df1.writeStream \
+        .trigger(processingTime='20 seconds')\
+        .outputMode("update") \
+>>>>>>> 46ef6c222a1e1e9fe571503b32c13aea561a691d
         .format("console") \
         .outputMode("append") \
         .start()
@@ -140,6 +163,7 @@ if __name__ == "__main__":
 
     od_parquet1.awaitTermination()
     od_df.awaitTermination()
+    
 
     # transaction_details = od_df.select('order_id', 'city', (col('qty')*(col('price'))).alias('total_price'))
 
